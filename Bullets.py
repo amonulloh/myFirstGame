@@ -66,7 +66,3 @@ while play:
     pygame.display.update()
 
 
-#classes:
-#   1. window;
-#   2. player_1;
-#   3. player_2;
