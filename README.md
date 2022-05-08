@@ -39,6 +39,20 @@ Keys to play for the fupm / fivt player:
 
 ### Some screenshots from game:
 
+<<<<<<< HEAD
+=======
+The beginning of the program.
+![image](./screenshots/Screenshot_1.png)
+
+Playing time.
+![image](./screenshots/Screenshot_2.png)
+
+Shooting players.
+![image](./screenshots/Screenshot_3.png)
+
+Game over. FIVT win
+![image](./screenshots/Screenshot_4.png)
+>>>>>>> 25dfe1b49429790d458b400e696047d876f9447d
 
 The beginning of the program.
 ![image](./screenshots/Screenshot_1.png)
