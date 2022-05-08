@@ -39,7 +39,7 @@ Keys to play for the fupm / fivt player:
 
 ### Some screenshots from game:
 
-=======
+
 The beginning of the program.
 ![image](./screenshots/Screenshot_1.png)
 
