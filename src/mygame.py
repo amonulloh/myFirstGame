@@ -84,10 +84,14 @@ class Game:
     To work with it, you need to generate an example
      of it.
     """
+
     def __init__(self):
         self.active = False
+        self.result = False
         self.music = True
         self.sound = True
+        self.fivt = 0
+        self.fupm = 0
         self.on = 1  # for on/off sounds
 
     def start(self):
@@ -113,6 +117,10 @@ class Game:
                         else:
                             self.music = False
                         self.active = False
+                    if event.key == pygame.K_TAB:
+                        self.result = True
+                    else:
+                        self.result = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     x, y = pygame.mouse.get_pos()
                     print(x, y)
@@ -125,6 +133,18 @@ class Game:
                     if (50 < x <= 250 and 400 <= y <= 445 and not self.active) or \
                             (len(player.objects) == 3 and 400 <= x <= 600 and
                              470 <= y <= 515):
+                        if len(player.objects) < 4:
+                            if player.objects[0].school == 'FUPM' and \
+                                    player.objects[1].school == 'FIVT':
+                                if player.objects[2].school == 'FUPM':
+                                    self.fupm += 1
+                                else:
+                                    self.fivt += 1
+                            else:
+                                if player.objects[0].school == 'FUPM':
+                                    self.fupm += 1
+                                else:
+                                    self.fivt += 1
                         self.active = True
                         self.music = False
                         player.objects = []
@@ -194,6 +214,15 @@ class Game:
                 window.windows.blit(restart_text_2, (401, 451))
                 go_sound.stop()
                 window.windows.blit(pause_img, (450, -1))
+        if self.result:
+            pygame.draw.rect(window.windows, 'grey', (305, 313, 357, 118))
+            result_text = header_font.render('FUPM:  ' + str(self.fupm),
+                                             True, 'black')
+            result_text2 = header_font.render('FIVT:  ' + str(self.fivt),
+                                              True, 'black')
+            window.windows.blit(result_text, (340, 310))
+            window.windows.blit(result_text2, (340, 360))
+
         pygame.display.update()
         clock.tick(fps)
 
