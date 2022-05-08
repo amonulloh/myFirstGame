@@ -17,6 +17,67 @@ foot2.set_volume(1 / 3)
 objects = []
 bullets = []
 
+Window = Window()
+
+
+class Base:
+    """
+    All the logic of the bases is only in this class.
+    It is th part of the objects.
+    It contains 4 functions, each function has its own
+     action will be reported.
+    It is automatically run when you run "main.py", it
+     will be imported into "mygame.py"
+    """
+
+    def __init__(self, x, y, image, color, ph):
+        """
+        All the parameters of this class in this function.
+        """
+        self.x = x
+        self.y = y
+        self.image = image
+        self.rect = pygame.Rect(x, y, 72, 72)
+        self.school = ph
+        self.hp = 20
+        self.cartridges = '(base)'
+        self.bcolour = color
+        objects.append(self)
+
+    def move(self):
+        """
+        This function responsible for the moving of the object.
+        But objects of this classes don't moving
+        :return: None
+        """
+        pass
+
+    def damage(self, value, color):
+        """
+        This function responsible for heart power of sprites.
+        """
+        if self.bcolour != color:
+            self.hp -= value
+        if self.hp <= 0:
+            objects.remove(self)
+            self.hp = 0
+
+    def draw(self):
+        """
+        This function responsible for drawing of sprites and result.
+        """
+        pygame.draw.rect(Window.windows, self.bcolour, (self.x, self.y, 76, 76))
+        Window.windows.blit(self.image, (self.x + 4, self.y + 4))
+        if len(objects) < 4 and objects[0].school == 'FUPM' and \
+                objects[1].school == 'FIVT':  # after Game over drawing the result
+            res_font = pygame.font.SysFont(None, 200)
+            res = res_font.render(self.school + ' ' + 'WIN', True, 'aqua')
+            res2 = res_font.render(self.school + ' ' + 'WIN', True, 'black')
+            Window.windows.blit(res2, res2.get_rect(center=(Window.length /
+                                                            2 + 3, Window.width / 2 + 3)))
+            Window.windows.blit(res, res.get_rect(center=(Window.length /
+                                                          2, Window.width / 2)))
+
 
 class Players:
     """
@@ -28,10 +89,12 @@ class Players:
     """
 
     def __init__(self, x, y, speed, keys, img, bspeed, bradius, bcolour, ph):
-
+        """
+        All the parameters of this class in this function.
+        """
         self.x, self.y = x, y  # players coord (x, y)
         self.speed = speed  # players speed: 5
-        self.position = 0  # players position: 0 - Right, 1 - Down, 2 - Left, 3 - Up
+        self.position = 0  # players position: 0-Right, 1-Down, 2-Left, 3-Up
         self.keyUp = keys[0]  # key for moving up: W, Up
         self.keyDown = keys[1]  # key for moving down: S, Down
         self.keyRight = keys[3]  # key for moving right: D, Right
@@ -40,7 +103,7 @@ class Players:
         self.imgNum = 0  # for sprites walking
         self.img = img  # setting sprites (players image)
         self.image = pygame.transform.rotate(self.img[self.imgNum],
-                                             -self.position * 90)  # transformation of sprites
+                                             -self.position * 90)
         self.school = ph  # the name of group: FIVT, FUPM
         self.bspeed = bspeed  # bullets speed
         self.bradius = bradius  # bullets radius
@@ -58,13 +121,13 @@ class Players:
         """
         self.image = pygame.transform.rotate(self.img[self.imgNum // 6],
                                              -self.position * 90)
-        self.moveDown()
-        self.moveUp()
-        self.moveLeft()
-        self.moveRight()
-        self.Shoot()
+        self.move_down()
+        self.move_up()
+        self.move_left()
+        self.move_right()
+        self.shoot()
 
-    def moveDown(self):
+    def move_down(self):
         """
         This function responsible for moving Down.
         """
@@ -75,7 +138,8 @@ class Players:
             self.position = 1
             self.imgNum += 1
             for obj in objects:
-                if obj != self and pygame.Rect.colliderect(self.rect, obj.rect):
+                if obj != self and pygame.Rect.colliderect(self.rect,
+                                                           obj.rect):
                     self.rect.y -= self.speed
                     self.y -= self.speed
             # Walls:
@@ -91,7 +155,7 @@ class Players:
                 self.y -= self.speed
                 self.rect.y -= self.speed
 
-    def moveUp(self):
+    def move_up(self):
         """
         This function responsible for moving Up.
         """
@@ -102,7 +166,8 @@ class Players:
             self.position = 3
             self.imgNum += 1
             for obj in objects:
-                if obj != self and pygame.Rect.colliderect(self.rect, obj.rect):
+                if obj != self and pygame.Rect.colliderect(self.rect,
+                                                           obj.rect):
                     self.rect.y += self.speed
                     self.y += self.speed
             # Walls
@@ -118,7 +183,7 @@ class Players:
                 self.y += self.speed
                 self.rect.y += self.speed
 
-    def moveLeft(self):
+    def move_left(self):
         """
         This function responsible for moving Left.
         """
@@ -129,7 +194,8 @@ class Players:
             self.position = 2
             self.imgNum += 1
             for obj in objects:
-                if obj != self and pygame.Rect.colliderect(self.rect, obj.rect):
+                if obj != self and pygame.Rect.colliderect(self.rect,
+                                                           obj.rect):
                     self.rect.x += self.speed
                     self.x += self.speed
             # Walls
@@ -141,7 +207,7 @@ class Players:
                 self.x += self.speed
                 self.rect.x += self.speed
 
-    def moveRight(self):
+    def move_right(self):
         """
         This function responsible for moving Right.
         """
@@ -152,7 +218,8 @@ class Players:
             self.position = 0
             self.imgNum += 1
             for obj in objects:
-                if obj != self and pygame.Rect.colliderect(self.rect, obj.rect):
+                if obj != self and pygame.Rect.colliderect(self.rect,
+                                                           obj.rect):
                     self.rect.x -= self.speed
                     self.x -= self.speed
             # Walls
@@ -164,7 +231,7 @@ class Players:
                 self.x -= self.speed
                 self.rect.x -= self.speed
 
-    def Shoot(self):
+    def shoot(self):
         """
         This function responsible for shooting of sprites.
         """
@@ -194,7 +261,7 @@ class Players:
                 foot2.play()
             self.imgNum = 0
 
-    def damage(self, value):
+    def damage(self, value, color):
         """
         This function responsible for heart power of sprites.
         """
@@ -209,7 +276,8 @@ class Players:
         This function responsible for drawing of sprites and result.
         """
         Window.windows.blit(self.image, (self.x, self.y))
-        if len(objects) < 2:  # after Game over drawing the result
+        # after Game over drawing the result
+        if len(objects) < 4 and objects[1].school != 'FIVT':
             res_font = pygame.font.SysFont(None, 200)
             res = res_font.render(self.school + ' ' + 'WIN', True, 'aqua')
             res2 = res_font.render(self.school + ' ' + 'WIN', True, 'black')
@@ -224,13 +292,14 @@ class Players:
         """
         This function responsible for result of the game.
         """
-        j = 0
+        j = 1
         result_font = pygame.font.SysFont(None, 35)
         for obj in objects:
-            result = result_font.render(obj.school + ': ' + str(obj.hp) +
-                                        '   ' + str(obj.cartridges), True, obj.bcolour)
-            Window.windows.blit(result, (50 + j * 50, 3))
-            j += 16
+            result = result_font.render(
+                obj.school + ': ' + str(obj.hp) + '  ' +
+                str(obj.cartridges), True, obj.bcolour)
+            Window.windows.blit(result, (j * 50 - 35, 3))
+            j += 5
 
 
 class Bullets:
@@ -246,14 +315,14 @@ class Bullets:
         bullets.append(self)
 
         self.x, self.y = x + 24, y + 24  # bullets coord (x, y)
-        self.position = position  # bullets position: 0 - Right, 1 - Down, 2 - Left, 3 - Up
+        self.position = position  # position: 0-Right, 1-Down, 2-Left, 3-Up
         self.radius = radius  # bullets radius: 4
         self.colour = colour  # bullets color: white, aqua
         self.speed = speed  # bullets speed: 20
         self.parent = parent  # bullets parent: FIVT or FUPM
         self.damage = 1  # number of shots
 
-    def moveSh(self):
+    def move_bullets(self):
         """
         This function responsible for moving of bullets.
         """
@@ -268,23 +337,27 @@ class Bullets:
         # Walls
         if 306 <= self.x <= 664 and 313 <= self.y <= 431:
             bullets.remove(self)
-        if 184 <= self.x <= 782 and (153 <= self.y <= 192 or 554 <= self.y <= 590):
+        if 184 <= self.x <= 782 and (153 <= self.y <= 192 or
+                                     554 <= self.y <= 590):
             bullets.remove(self)
         if (144 <= self.x <= 184 or 782 <= self.x <= 822) and \
                 (153 <= self.y <= 314 or 433 <= self.y <= 592):
             bullets.remove(self)
-        if self.x <= 0 or self.x > Window.length or self.y <= 30 or self.y > Window.width:
+        if self.x <= 0 or self.x > Window.length or self.y <= 30 or \
+                self.y > Window.width:
             bullets.remove(self)
         # Damaging to another player
         else:
             for obj in objects:
-                if obj != self.parent and obj.rect.collidepoint(self.x, self.y):
-                    obj.damage(self.damage)
+                if obj != self.parent and \
+                        obj.rect.collidepoint(self.x, self.y):
+                    obj.damage(self.damage, self.colour)
                     bullets.remove(self)
                     break
 
-    def drawSh(self):
+    def draw_bullets(self):
         """
         This function responsible for drawing of bullets.
         """
-        pygame.draw.circle(Window.windows, self.colour, (self.x, self.y), self.radius)
+        pygame.draw.circle(Window.windows, self.colour, (self.x, self.y),
+                           self.radius)

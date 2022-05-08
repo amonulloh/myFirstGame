@@ -1,8 +1,10 @@
-#This Class for Window
+# This Class for Window
 
 import pygame
+pygame.init()
 
-class Window():
+
+class Window:
     """
     This class responsible for size (length and
      width) of the display

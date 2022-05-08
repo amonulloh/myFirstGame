@@ -2,18 +2,25 @@
 
 
 Phystech Strike 2D (PhS_2D) - a shooter game written in Python.
-It is played by two players, blue (FIVT and white (FUPM), respectively.
-They have 5 heart power (hp), and in each hit of a bullet,
-hp will decrease by one, if hp is 0, that player will die.
-Whoever kills the fastest wins. In addition, they have 20 bullets
-in their cartridges. Then after reloading they can shoot.
+It is played by two players, orange (FIVT) and blue (FUPM) with
+their military bases, respectively.  
+Soldiers and bases have 5 and 20 heart powers (hp), respectively
+and in each hit of a bullet, hp will decrease by one, if hp is 0,
+that player will die.
+The one who kills another soldier or destroys another base wins.
+In addition, they have 20 bullets in their cartridges. Then after
+reloading they can shoot.
 
  ### How to play?
 
-+ **Link to clone files from github:**
-> `https://github.com/amonulloh/myFirstGame/tree/checkpoint_3`
++ **To clone files from github:**
+```bash
+git clone https://github.com/amonulloh/myFirstGame/tree/checkpoint_3
+```
 + **Run main.py**
-> `python3 main.py`
+ ```bash
+ python3 main.py
+ ```
 
 After running, the main menu window opens. There are 4 buttons in the main menu:
 Play, Restart, Exit and sound.
@@ -32,9 +39,16 @@ Keys to play for the fupm / fivt player:
 
 ### Some screenshots from game:
 
-![The beginning of the program.](./Screenshots/Screenshot_1.png)
-![Playing time.](./Screenshots/Screenshot_2.png)
-![Shooting players.](./Screenshots/Screenshot_3.png)
-![Game over. FIVT win](./Screenshots/Screenshot_4.png)
 
+The beginning of the program.
+![image](./screenshots/Screenshot_1.png)
+
+Playing time.
+![image](./screenshots/Screenshot_2.png)
+
+Shooting players.
+![image](./screenshots/Screenshot_3.png)
+
+Game over. FIVT win
+![image](./screenshots/Screenshot_4.png)
 ***Thank you very much, Regards Manuel***
