@@ -31,6 +31,7 @@ Play, Restart, Exit and sound.
 
 Keys to play for the fupm / fivt player:
 + esc - for pause the game
++ Tab - for show the result
 + w / up - moving up
 + s / down - moving down
 + a / left- moving left
