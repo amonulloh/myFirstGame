@@ -62,17 +62,6 @@ go_sound = pygame.mixer.Sound(os.path.join("sounds/go_sound.mp3"))
 
 
 # object's (player) characters
-def sprites():
-    """
-    This function responsible for sprites and
-     objects characters
-    """
-    Players(50, 100, 5, (pygame.K_w, pygame.K_s, pygame.K_a, pygame.K_d,
-                         pygame.K_SPACE), image1, 20, 4, 'grey', 'FUPM')
-    Players(940, 440, 5, (pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT,
-                          pygame.K_RIGHT, pygame.K_RETURN), image2, 20, 4, 'yellow', 'FIVT')
-    Base(68, 220, image3, 'grey', 'FUPM')
-    Base(824, 450, image4, 'yellow', 'FIVT')
 
 
 class Game:
@@ -84,6 +73,19 @@ class Game:
     To work with it, you need to generate an example
      of it.
     """
+
+    @staticmethod
+    def sprites():
+        """
+        This function responsible for sprites and
+         objects characters
+        """
+        Players(50, 100, 5, (pygame.K_w, pygame.K_s, pygame.K_a, pygame.K_d,
+                             pygame.K_SPACE), image1, 20, 4, 'grey', 'FUPM')
+        Players(940, 440, 5, (pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT,
+                              pygame.K_RIGHT, pygame.K_RETURN), image2, 20, 4, 'yellow', 'FIVT')
+        Base(68, 220, image3, 'grey', 'FUPM')
+        Base(824, 450, image4, 'yellow', 'FIVT')
 
     def __init__(self):
         self.active = False
@@ -123,7 +125,6 @@ class Game:
                         self.result = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     x, y = pygame.mouse.get_pos()
-                    print(x, y)
                     # this condition responsible for play button
                     if 50 <= x <= 250 and 330 <= y <= 375:
                         self.active = True
@@ -149,7 +150,7 @@ class Game:
                         self.music = False
                         player.objects = []
                         player.bullets = []
-                        sprites()
+                        Game().sprites()
                         go_sound.play()
                     # this condition responsible for exit button
                     if 50 <= x <= 250 and 470 <= y <= 515 and not self.active:
@@ -238,7 +239,7 @@ class Game:
         go_sound.set_volume(self.on)
 
 
-sprites()
+Game().sprites()
 
 """
 __init__(self, parent, x, y, position,
